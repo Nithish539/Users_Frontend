@@ -1,0 +1,213 @@
+﻿@{
+    ViewData["Title"] = "User Management";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            display: flex;
+            height: 100vh;
+        }
+        .sidebar {
+            width: 250px;
+            background: #333;
+            color: white;
+            padding: 15px;
+        }
+        .sidebar a {
+            display: block;
+            padding: 10px;
+            color: white;
+            text-decoration: none;
+            margin-bottom: 5px;
+        }
+        .sidebar a:hover {
+            background: #555;
+        }
+        .content {
+            flex: 1;
+            padding: 20px;
+        }
+        .hidden {
+            display: none;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+        table, th, td {
+            border: 1px solid black;
+        }
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+        .comment-box {
+            margin-top: 10px;
+        }
+        .btn {
+            padding: 10px;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+        .btn-blue {
+            background-color: blue;
+            color: white;
+        }
+        .btn-red {
+            background-color: red;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <!-- Sidebar -->
+        <div class="sidebar">
+            <h3>Menu</h3>
+            <a href="#" onclick="showTab('users')">Users</a>
+            <a href="#" onclick="showTab('projects')">Projects</a>
+            <a href="#" onclick="showTab('tasks')">Tasks</a>
+            <a href="#" onclick="showTab('settings')">Settings</a>
+        </div>
+
+        <!-- Content Area -->
+        <div class="content">
+            <!-- Users Tab -->
+            <div id="users" class="tab-content">
+                <h2>Users</h2>
+                <form id="userForm">
+                    <input type="text" id="firstName" placeholder="First Name" required>
+                    <input type="text" id="lastName" placeholder="Last Name" required>
+                    <input type="email" id="email" placeholder="E-Mail" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                    <select id="role">
+                        <option value="Task Manager">Task Manager</option>
+                        <option value="Task Owner">Task Owner</option>
+                    </select>
+                    <button type="button" onclick="addUser()">Add User</button>
+                </form>
+                <table id="userTable">
+                    <tr>
+                        <th>First Name</th>
+                        <th>Last Name</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Actions</th>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Projects Tab -->
+            <div id="projects" class="tab-content hidden">
+                <h2>Projects</h2>
+                <form id="projectForm">
+                    <input type="text" id="projectName" placeholder="Project Name" required>
+                    <input type="text" id="projectId" placeholder="Project ID" required>
+                    <input type="text" id="projectType" placeholder="Project Type" required>
+                    <select id="applicationType">
+                        <option value="Commercial">Commercial</option>
+                        <option value="Residential">Residential</option>
+                    </select>
+                    <button type="button" onclick="addProject()">Add Project</button>
+                </form>
+                <table id="projectTable">
+                    <tr>
+                        <th>Project Name</th>
+                        <th>Project ID</th>
+                        <th>Project Type</th>
+                        <th>Application Type</th>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- Tasks Tab -->
+            <div id="tasks" class="tab-content hidden">
+                <h2>Tasks</h2>
+                <table id="taskTable">
+                    <tr>
+                        <th>Sr.No</th>
+                        <th>Task ID</th>
+                        <th>Task Name</th>
+                        <th>Task Date</th>
+                        <th>Task Status</th>
+                    </tr>
+                </table>
+
+                <h3>Task Details</h3>
+                <table id="taskDetailsTable">
+                    <tr>
+                        <th>Comment</th>
+                    </tr>
+                </table>
+
+                <div class="comment-box">
+                    <input type="text" id="commentText" placeholder="Enter comment">
+                    <button onclick="addComment()">Submit</button>
+                </div>
+
+                <button class="btn btn-blue">Ready for Submission</button>
+                <button class="btn btn-red">Not Ready for Submission</button>
+            </div>
+
+            <!-- Settings Tab -->
+            <div id="settings" class="tab-content hidden">
+                <h2>Settings</h2>
+                <button class="btn">Change Password</button>
+                <button class="btn">Delete Account</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function showTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.add('hidden'));
+            document.getElementById(tabId).classList.remove('hidden');
+        }
+
+        function addUser() {
+            let table = document.getElementById("userTable");
+            let row = table.insertRow();
+            row.insertCell(0).innerText = document.getElementById("firstName").value;
+            row.insertCell(1).innerText = document.getElementById("lastName").value;
+            row.insertCell(2).innerText = document.getElementById("email").value;
+            row.insertCell(3).innerText = document.getElementById("role").value;
+            let actionCell = row.insertCell(4);
+            actionCell.innerHTML = '<button onclick="deleteRow(this)">Delete</button>';
+        }
+
+        function addProject() {
+            let table = document.getElementById("projectTable");
+            let row = table.insertRow();
+            row.insertCell(0).innerText = document.getElementById("projectName").value;
+            row.insertCell(1).innerText = document.getElementById("projectId").value;
+            row.insertCell(2).innerText = document.getElementById("projectType").value;
+            row.insertCell(3).innerText = document.getElementById("applicationType").value;
+        }
+
+        function addComment() {
+            let table = document.getElementById("taskDetailsTable");
+            let row = table.insertRow();
+            row.insertCell(0).innerText = document.getElementById("commentText").value;
+            document.getElementById("commentText").value = "";
+        }
+
+        function deleteRow(button) {
+            button.parentElement.parentElement.remove();
+        }
+    </script>
+
+</body>
+</html>

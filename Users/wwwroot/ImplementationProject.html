@@ -1,0 +1,24 @@
+﻿@{
+    ViewData["Title"] = "Projects";
+}
+
+<h2>Projects</h2>
+
+<form id="projectForm">
+    <input type="text" id="projectName" placeholder="Project Name">
+    <input type="text" id="projectId" placeholder="Project ID">
+    <select id="projectType">
+        <option value="Commercial">Commercial</option>
+        <option value="Residential">Residential</option>
+    </select>
+    <button type="submit">Add Project</button>
+</form>
+
+<table id="projectTable" border="1">
+    <tr>
+        <th>Project Name</th>
+        <th>Project ID</th>
+        <th>Type</th>
+        <th>Actions</th>
+    </tr>
+</table>

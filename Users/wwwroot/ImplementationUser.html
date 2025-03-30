@@ -1,0 +1,27 @@
+﻿@{
+    ViewData["Title"] = "Users";
+}
+
+<h2>Users</h2>
+
+<form id="userForm">
+    <input type="text" id="firstName" placeholder="First Name">
+    <input type="text" id="lastName" placeholder="Last Name">
+    <input type="email" id="email" placeholder="E-Mail">
+    <input type="password" id="password" placeholder="Password">
+    <select id="role">
+        <option value="Task Manager">Task Manager</option>
+        <option value="Task Owner">Task Owner</option>
+    </select>
+    <button type="submit">Add User</button>
+</form>
+
+<table id="userTable" border="1">
+    <tr>
+        <th>First Name</th>
+        <th>Last Name</th>
+        <th>Email</th>
+        <th>Role</th>
+        <th>Actions</th>
+    </tr>
+</table>
